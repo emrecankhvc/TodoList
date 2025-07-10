@@ -1,0 +1,51 @@
+﻿@model TodoProject.Entities.TodoItem
+
+@{
+    ViewData["Title"] = "Görev Silme Onayı";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="alert alert-warning">
+    <strong>Dikkat!</strong> Bu işlemi onaylarsanız seçili görev kalıcı olarak silinecektir.
+</div>
+
+<div>
+    <h4>Silinecek Görev Detayları</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Başlık</dt>
+        <dd class="col-sm-10">@Model.Title</dd>
+
+        <dt class="col-sm-2">Açıklama</dt>
+        <dd class="col-sm-10">@Model.Description</dd>
+
+        <dt class="col-sm-2">Kategori</dt>
+        <dd class="col-sm-10">@Model.Category</dd>
+
+        <dt class="col-sm-2">Bitiş Tarihi</dt>
+        <dd class="col-sm-10">@Model.DueDate.ToString("dd.MM.yyyy")</dd>
+
+        <dt class="col-sm-2">Öncelik</dt>
+        <dd class="col-sm-10">@Model.Priority</dd>
+
+        <dt class="col-sm-2">Durum</dt>
+        <dd class="col-sm-10">
+            @{
+                var durum = Model.Status switch
+                {
+                    "U" => "Tamamlanmadı",
+                    "I" => "Devam Ediyor",
+                    "C" => "Tamamlandı",
+                    _ => "Bilinmiyor"
+                };
+            }
+            @durum
+        </dd>
+    </dl>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>

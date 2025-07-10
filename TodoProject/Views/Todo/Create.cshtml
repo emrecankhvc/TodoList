@@ -1,0 +1,68 @@
+﻿@model TodoProject.Entities.TodoItem
+@{
+    ViewData["Title"] = "Yeni Görev Ekle";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-success">Yeni Görev Ekle</h2>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">Başlık *</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Açıklama</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Category" class="form-label">Kategori *</label>
+            <input asp-for="Category" class="form-control" />
+            <span asp-validation-for="Category" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DueDate" class="form-label">Bitiş Tarihi *</label>
+            <input asp-for="DueDate" class="form-control" type="datetime-local" />
+            <span asp-validation-for="DueDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Priority" class="form-label">Öncelik *</label>
+            <select asp-for="Priority" class="form-select">
+                <option value="">-- Seçiniz --</option>
+                <option value="Low">Düşük</option>
+                <option value="Medium">Orta</option>
+                <option value="High">Yüksek</option>
+            </select>
+            <span asp-validation-for="Priority" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="/Todo/Index" class="btn btn-secondary">İptal</a>
+            <button type="submit" class="btn btn-success">Görevi Kaydet</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    }
+}

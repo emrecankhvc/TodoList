@@ -1,0 +1,65 @@
+﻿@model TodoProject.Entities.TodoItem
+@{
+    ViewData["Title"] = "Görev Düzenle";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-warning">Görev Düzenle</h2>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">Başlık *</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Açıklama</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Category" class="form-label">Kategori</label>
+            <input asp-for="Category" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DueDate" class="form-label">Bitiş Tarihi *</label>
+            <input asp-for="DueDate" class="form-control" type="datetime-local" value="@Model.DueDate.ToString("yyyy-MM-ddTHH:mm")" />
+            <span asp-validation-for="DueDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Priority" class="form-label">Öncelik *</label>
+            <select asp-for="Priority" class="form-select">
+                <option value="">-- Seçiniz --</option>
+                <option value="Low" selected="@("Low" == Model.Priority)">Düşük</option>
+                <option value="Medium" selected="@("Medium" == Model.Priority)">Orta</option>
+                <option value="High" selected="@("High" == Model.Priority)">Yüksek</option>
+            </select>
+            <span asp-validation-for="Priority" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Status" class="form-label">Durum *</label>
+            <select asp-for="Status" class="form-select">
+                <option value="">-- Seçiniz --</option>
+                <option value="U" selected="@("U" == Model.Status)">Tamamlanmadı</option>
+                <option value="I" selected="@("I" == Model.Status)">Devam Ediyor</option>
+                <option value="C" selected="@("C" == Model.Status)">Tamamlandı</option>
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="/Todo/Index" class="btn btn-secondary">İptal</a>
+            <button type="submit" class="btn btn-warning">Değişiklikleri Kaydet</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
