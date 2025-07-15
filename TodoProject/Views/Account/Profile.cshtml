@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Profile";
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+    ViewData["Title"] = @Localizer["PageTitle"];
     Layout = "_Layout";
 }
 
@@ -20,24 +21,21 @@
 
         <form method="post" asp-action="ProfileChangeFullName">
             <div class="form-group">
-                <label class="form-label small">İsim Soyisim</label>
+                <label class="form-label small">@Localizer["NameSurname"]</label>
                 <div class="input-group mb-3">
                     <input name="fullname" type="text" class="form-control" placeholder="Kodit" value="@ViewData["FullName"]" />
-                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-1"></i>Kaydet</button>
+                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-1"></i>@Localizer["Save"]</button>
                 </div>
             </div>
         </form>
         <form method="post" asp-action="ProfileChangePassword">
             <div class="form-group">
-                <label class="form-label small">Yeni Şifre</label>
+                <label class="form-label small">@Localizer["NewPsd"]</label>
                 <div class="input-group mb-1">
                     <input name="password" type="password" class="form-control" placeholder="xxxxx" />
-                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-1"></i>Kaydet</button>
+                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-1"></i>@Localizer["Save"]</button>
                 </div>
-                @if (ViewData["result"] != null && ViewData["result"] == "Şifreniz başarıyla değiştirildi.")
-                {
-                    <span class="text-success small">Şifre Güncellendi.</span>
-                }
+                
 
             </div>
         </form>
@@ -45,10 +43,10 @@
 </div>
 
 @section Scripts {
-    @if (ViewData["result"] != null && ViewData["result"] == "Şifreniz başarıyla değiştirildi.")
+    @if (TempData["PasswordChanged"] != null && (bool)TempData["PasswordChanged"])
     {
         <script>
-            toastr["success"]("Şifreniz Değiştirilmiştir.", "Şifre Değişti!");
+            toastr.success('@Localizer["PasswordChangedMessage"]', '@Localizer["PasswordChangedTitle"]');
         </script>
     }
     

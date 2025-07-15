@@ -1,58 +1,66 @@
-﻿@model TodoProject.Models.TodoFilterViewModel
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@model TodoProject.Models.TodoFilterViewModel
 @using System.Globalization
 @{
-    ViewData["Title"] = "Görevlerim";
+    ViewData["Title"] = @Localizer["PageTitle"];
 }
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="text-primary">Görev Listesi</h2>
-        <a href="/Todo/Create" class="btn btn-success">+ Yeni Görev Ekle</a>
+        <h2 class="text-primary">@Localizer["PageTitle"]</h2>
+        <a href="/Todo/Create" class="btn btn-success">+ @Localizer["AddTaskButton"]</a>
     </div>
 
     <!-- Filtreleme Formu -->
     <form method="get" class="mb-4">
         <div class="row g-3 align-items-end">
             <div class="col-md-2">
-                <label asp-for="Status" class="form-label">Durum</label>
+                <label asp-for="Status" class="form-label">@Localizer["Status"]</label>
                 <select asp-for="Status" class="form-select">
-                    <option value="">Hepsi</option>
-                    <option value="I" selected="@(Model.Status == "I")">Devam Ediyor</option>
-                    <option value="C" selected="@(Model.Status == "C")">Tamamlandı</option>
-                    <option value="U" selected="@(Model.Status == "U")">Tamamlanmadı</option>
+                    <option value="">@Localizer["ALL"]</option>
+                    <option value="I" selected="@(Model.Status == "I")">@Localizer["Status_IP"]</option>
+                    <option value="C" selected="@(Model.Status == "C")">@Localizer["Status_C"]</option>
+                    <option value="U" selected="@(Model.Status == "U")">@Localizer["Status_UC"]</option>
                 </select>
             </div>
             <div class="col-md-2">
-                <label asp-for="Priority" class="form-label">Öncelik</label>
+                <label asp-for="Priority" class="form-label">@Localizer["Priority"]</label>
                 <select asp-for="Priority" class="form-select">
-                    <option value="">Hepsi</option>
-                    <option value="Low" selected="@(Model.Priority == "Low")">Düşük</option>
-                    <option value="Medium" selected="@(Model.Priority == "Medium")">Orta</option>
-                    <option value="High" selected="@(Model.Priority == "High")">Yüksek</option>
+                    <option value="">@Localizer["ALL"]</option>
+                    <option value="Low" selected="@(Model.Priority == "Low")">@Localizer["Priority_Low"]</option>
+                    <option value="Medium" selected="@(Model.Priority == "Medium")">@Localizer["Priority_Medium"]</option>
+                    <option value="High" selected="@(Model.Priority == "High")">@Localizer["Priority_High"]</option>
                 </select>
             </div>
             <div class="col-md-3">
-                <label asp-for="Category" class="form-label">Kategori</label>
-                <input asp-for="Category" class="form-control" placeholder="Kategori ara" />
+                <label asp-for="Category" class="form-label">@Localizer["Category"]</label>
+                <select asp-for="Category" class="form-select">
+                    <option value="">@Localizer["ALL"]</option>
+                    <option value="School" selected="@(Model.Category == "School")">@Localizer["Category_School"]</option>
+                    <option value="Work" selected="@(Model.Category == "Work")">@Localizer["Category_Work"]</option>
+                    <option value="Sport" selected="@(Model.Category == "Sport")">@Localizer["Category_Sport"]</option>
+                </select>
             </div>
             <div class="col-md-3">
-                <label asp-for="SortBy" class="form-label">Sırala</label>
+                <label asp-for="SortBy" class="form-label">@Localizer["SortLabel"]</label>
                 <select asp-for="SortBy" class="form-select">
-                    <option value="">Son tarihe göre (azalan)</option>
-                    <option value="duedate_asc" selected="@(Model.SortBy == "duedate_asc")">Son tarihe göre (artan)</option>
-                    <option value="priority" selected="@(Model.SortBy == "priority")">Önceliğe göre</option>
-                    <option value="title" selected="@(Model.SortBy == "title")">Başlığa göre (A-Z)</option>
+                    <option value="">@Localizer["Sort_Due_Desc"]</option>
+                    <option value="duedate_asc" selected="@(Model.SortBy == "duedate_asc")">@Localizer["Sort_Due_Asc"]</option>
+                    <option value="priority" selected="@(Model.SortBy == "priority")">@Localizer["Sort_Priority"]</option>
+                    <option value="title" selected="@(Model.SortBy == "title")">@Localizer["Sort_Title"]</option>
+                    <option value="status" selected="@(Model.SortBy == "status")">@Localizer["Sort_Status"]</option>
+                    <option value="category" selected="@(Model.SortBy =="category")">@Localizer["Sort_Category"]</option>
                 </select>
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">Filtrele</button>
+                <button type="submit" class="btn btn-primary w-100">@Localizer["FilterButton"]</button>
             </div>
         </div>
     </form>
 
     @if (!Model.Items.Any())
     {
-        <div class="alert alert-info">Henüz hiç göreviniz yok.</div>
+        <div class="alert alert-info">@Localizer["NoTasksMessage"].</div>
     }
     else
     {
@@ -67,44 +75,60 @@
                                 <p class="card-text">@item.Description</p>
                                 <ul class="list-group list-group-flush mb-3">
                                     <li class="list-group-item">
-                                        <strong>Kategori:</strong> @item.Category
+                                        <strong>@Localizer["Category"]:</strong> 
+                                        @switch (item.Category)
+                                        {
+                                            case "School":
+                                                <span>@Localizer["Category_School"]</span>
+                                                break;
+                                            case "Work":
+                                            <span>@Localizer["Category_Work"]</span>
+                                        break;
+                                            case "Sport":
+                                                <span>@Localizer["Category_Sport"]</span>
+                                                break;
+                                            default:
+                                                <span>@Localizer["Unknown"]</span>
+                                                break;
+                                        
+                                        }
                                     </li>
                                     <li class="list-group-item">
-                                        <strong>Tarih:</strong> @item.DueDate.ToString("dd MMMM yyyy HH:mm", new CultureInfo("tr-TR"))
+                                        <strong>@Localizer["DateLabel"]:</strong> @item.DueDate.ToString("dd MMMM yyyy HH:mm",CultureInfo.CurrentCulture)
                                     </li>
                                     <li class="list-group-item">
-                                        <strong>Öncelik:</strong>
+                                        <strong>@Localizer["Priority"]:</strong>
                                         @switch (item.Priority)
                                         {
                                             case "Low":
-                                                <span class="badge bg-success">Düşük</span>
+                                                <span class="badge bg-success">@Localizer["Priority_Low"]</span>
                                                 break;
                                             case "Medium":
-                                                <span class="badge bg-warning text-dark">Orta</span>
+                                                <span class="badge bg-warning text-dark">@Localizer["Priority_Medium"]</span>
                                                 break;
                                             case "High":
-                                                <span class="badge bg-danger">Yüksek</span>
+                                                <span class="badge bg-danger">@Localizer["Priority_High"]</span>
                                                 break;
                                             default:
-                                                <span class="badge bg-secondary">Bilinmiyor</span>
+                                                <span class="badge bg-secondary">@Localizer["Unknown"]</span>
                                                 break;
                                         }
                                     </li>
                                     <li class="list-group-item">
-                                        <strong>Durum:</strong>
+                                        <strong>@Localizer["Status"]:</strong>
                                         @switch (item.Status?.ToUpper())
                                         {
                                             case "U":
-                                                <span class="badge bg-warning text-dark">Tamamlanmadı</span>
+                                                <span class="badge bg-warning text-dark">@Localizer["Status_UC"]</span>
                                                 break;
                                             case "I":
-                                                <span class="badge bg-info text-dark">Devam Ediyor</span>
+                                                <span class="badge bg-info text-dark">@Localizer["Status_IP"]</span>
                                                 break;
                                             case "C":
-                                                <span class="badge bg-success">Tamamlandı</span>
+                                                <span class="badge bg-success">@Localizer["Status_C"]</span>
                                                 break;
                                             default:
-                                                <span class="badge bg-secondary">Bilinmiyor</span>
+                                                <span class="badge bg-secondary">@Localizer["Unknown"]</span>
                                                 break;
                                         }
                                     </li>
@@ -112,10 +136,10 @@
                             </div>
 
                             <div class="mt-auto d-flex justify-content-between">
-                                <a href="/Todo/Edit/@item.Id" class="btn btn-sm btn-primary">Düzenle</a>
-                                <form asp-action="Delete" asp-controller="Todo" method="post" onsubmit="return confirm('Görevi silmek istediğinize emin misiniz?');">
+                                <a href="/Todo/Edit/@item.Id" class="btn btn-sm btn-primary">@Localizer["Edit"]</a>
+                                <form asp-action="Delete" asp-controller="Todo" method="post" onsubmit="return confirm('@(Localizer["DeleteConfirmMessage"])');">
                                     <input type="hidden" name="id" value="@item.Id" />
-                                    <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                                    <button type="submit" class="btn btn-sm btn-danger">@Localizer["Delete"]</button>
                                 </form>
                             </div>
                         </div>
@@ -130,21 +154,21 @@
     @if (TempData["SuccessMessage"] != null)
     {
         <script>
-            toastr["success"]("Görev başarılı bir şekilde eklenmiştir.", "Görev eklendi!");
+            toastr["success"]("@Localizer["Toast_Success_Message"]", "@Localizer["Toast_Success_Title"]");
         </script>
     }
 
     @if (TempData["InfoMessage"] != null)
     {
         <script>
-            toastr["info"]("Görev başarılı bir şekilde güncellendi.", "Görev güncellendi!");
+            toastr["info"]("@Localizer["Toast_Info_Message"]", "@Localizer["Toast_Info_Title"]");
         </script>
     }
 
     @if (TempData["WarningMessage"] != null)
     {
         <script>
-            toastr["warning"]("Görev başarılı bir şekilde silinmiştir.", "Görev silindi!");
+            toastr["warning"]("@Localizer["Toast_Warning_Message"]", "@Localizer["Toast_Warning_Title"]");
         </script>
     }
 }

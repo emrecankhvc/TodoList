@@ -20,33 +20,45 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                       
-              
-                        
+                   <ul class="navbar-nav">
+                      @if (User.Identity.IsAuthenticated)
+                      {
+                        <li class="nav-item d-flex align-items-center">
+                                <a class="nav-link px-1" href="/set-language?culture=tr&returnUrl=@Context.Request.Path">🇹🇷</a>
+                               <span>|</span>
+                                <a class="nav-link px-1" href="/set-language?culture=en&returnUrl=@Context.Request.Path">🇬🇧</a>
+                          </li>
+                      }
+                            </ul>
+                    <ul class="navbar-nav ms-auto">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item ms-auto">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">
-                                <i class="fa-solid fa-user me-1"></i>@User.FindFirst("Username").Value
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">
+                                    <i class="fa-solid fa-user me-1"></i>@User.FindFirst("Username").Value
                                 </a>
-                        </li
-                        <li class="nav-item ">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa-solid fa-right-from-bracket me-1"></i>Logout</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">
+                                    <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
+                                </a>
                             </li>
                         }
                         else
                         {
-                            <li class="nav-item ms-auto">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login"><i class="fa-solid fa-arrow-right-to-bracket me-1"></i>Login</a>
-                        </li
-                        <li class="nav-item ">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register"><i class="fa-solid fa-user-plus me-1"></i>Register</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">
+                                    <i class="fa-solid fa-arrow-right-to-bracket me-1"></i>Login
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">
+                                    <i class="fa-solid fa-user-plus me-1"></i>Register
+                                </a>
+                            </li>
                         }
-
-                        
                     </ul>
                 </div>
             </div>
@@ -58,11 +70,6 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - TodoProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

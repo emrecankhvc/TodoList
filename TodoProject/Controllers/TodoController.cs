@@ -28,12 +28,14 @@ namespace TodoProject.Controllers
                 query = query.Where(x => x.Priority.ToLower() == filter.Priority.ToLower());
 
             if (!string.IsNullOrEmpty(filter.Category))
-                query = query.Where(x => x.Category.ToLower().Contains(filter.Category.ToLower()));
+                query = query.Where(x => x.Category.ToLower() == filter.Category.ToLower());
 
             query = filter.SortBy switch
             {
                 "duedate_asc" => query.OrderBy(x => x.DueDate),
                 "duedate_desc" => query.OrderByDescending(x => x.DueDate),
+                "status" => query.OrderBy(x => x.Status),
+                "category" => query.OrderBy(x => x.Category),
                 "priority" => query.OrderByDescending(x => 
                 
                    x.Priority == "High" ? 3:

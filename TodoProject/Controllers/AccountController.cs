@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Localization;
+using Microsoft.Extensions.Localization;
 using NETCore.Encrypt.Extensions;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
@@ -87,10 +89,11 @@ namespace TodoProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(_databaseContext.Users.Any(x => x.Username.ToLower() == model.Username.ToLower()))
+                if(_databaseContext.Users.Any(x => x.Username == model.Username))
                 {
                     ModelState.AddModelError(nameof(model.Username), "Bu kullanıcı adı zaten alınmış. Lütfen farklı bir kullanıcı adı deneyin.");
-                    View(model);
+                   return View(model);
+
                 }
                 string hashedPassword = DoMD5HashedString(model.Password);
 
@@ -157,7 +160,8 @@ namespace TodoProject.Controllers
                 user.Password = hashedPassword;
                 _databaseContext.SaveChanges();
 
-                ViewData["result"] = "Şifreniz başarıyla değiştirildi.";
+                TempData["PasswordChanged"] = true; //  toastr için işaret veriyoruz
+                return RedirectToAction("Profile");
             }
             ProfileInfoLoader();
             return View("Profile");
