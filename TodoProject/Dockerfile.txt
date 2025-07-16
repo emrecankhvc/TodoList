@@ -1,0 +1,23 @@
+﻿# --------- 1. Build aşaması ---------
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /app
+
+# Proje dosyasını kopyala ve restore et
+COPY *.csproj ./
+RUN dotnet restore
+
+# Tüm dosyaları kopyala ve yayına hazırla
+COPY . ./
+RUN dotnet publish -c Release -o /app/publish
+
+# --------- 2. Çalıştırma (runtime) ---------
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+
+# Render'da port 10000 kullanılmalı
+ENV ASPNETCORE_URLS=http://+:10000
+EXPOSE 10000
+
+# Projenin DLL dosyası neyse onu başlat
+ENTRYPOINT ["dotnet", "TodoProject.dll"]

@@ -21,7 +21,6 @@ namespace TodoProject.Entities
         public string Category { get; set; }
 
         [Required(ErrorMessage = "Bitiş tarihi girilmelidir.")]
-        [FutureDate(ErrorMessage = "Bitiş tarihi bugünden önce olamaz.")]
         public DateTime DueDate { get; set; }
 
         [Required(ErrorMessage = "Durum alanı seçilmelidir.")]
