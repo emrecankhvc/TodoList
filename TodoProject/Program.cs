@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Globalization;
+using TodoProject.Business.Interfaces;
+using TodoProject.Business.Services;
+using TodoProject.Data.Interfaces;
+using TodoProject.Data.Repositories;
 using TodoProject.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +19,11 @@ builder.Services.AddDbContext<DatabaseContext>(opts =>
     opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     //opts.UseLazyLoadingProxies();
 });
+
+// TODO: Ýþ katmaný servis kaydý
+builder.Services.AddScoped<ITodoService, TodoService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(opts =>
