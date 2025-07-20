@@ -12,6 +12,7 @@ namespace TodoProject.Controllers
     public class TodoController : Controller
     {
         private readonly ITodoService _todoService;
+        private Guid CurrentUserId => new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
         public TodoController(ITodoService todoService)
         {
@@ -20,7 +21,7 @@ namespace TodoProject.Controllers
 
         public IActionResult Index(TodoFilterViewModel filter)
         {
-            Guid userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            Guid userId = CurrentUserId;
             filter.Items = _todoService.GetFilteredTodos(userId, filter);
             return View(filter);
         }
@@ -37,39 +38,30 @@ namespace TodoProject.Controllers
             ModelState.Remove("Status");
             ModelState.Remove("OtherCategory");
 
-            if (item.Category == "Other")
+            if (!ModelState.IsValid)
             {
-                if (string.IsNullOrWhiteSpace(OtherCategory))
-                {
-                    ModelState.AddModelError("OtherCategory", "Lütfen diğer kategoriyi giriniz.");
-                }
-                else if (OtherCategory.Length > 20)
-                {
-                    ModelState.AddModelError("OtherCategory", "Diğer kategori en fazla 20 karakter olabilir.");
-                }
-                else
-                {
-                    item.Category = OtherCategory;
-                }
+                return View(item);
             }
 
+            Guid userId = CurrentUserId;
 
-            if (ModelState.IsValid)
+            var (isSuccess, errorMessage) = _todoService.AddTodo(item, OtherCategory, userId);
+
+            if (!isSuccess)
             {
-
-                item.UserId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                _todoService.AddTodo(item);
-                TempData["SuccessMessage"] = "Görev eklendi";
-                return RedirectToAction(nameof(Index));
+                // Hatalıysa ilgili hata mesajını döndür
+                ModelState.AddModelError("OtherCategory", errorMessage ?? "Bir hata oluştu.");
+                return View(item);
             }
 
-            return View(item);
+            TempData["SuccessMessage"] = "Görev başarıyla oluşturuldu.";
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Guid userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            Guid userId = CurrentUserId;
             var item = _todoService.GetTodoById(id, userId);
             if (item == null) return NotFound();
 
@@ -80,40 +72,27 @@ namespace TodoProject.Controllers
         public IActionResult Edit(TodoItem updatedItem, string OtherCategory)
         {
             ModelState.Remove("OtherCategory");
-            if (updatedItem.Category == "Other")
+
+            Guid userId = CurrentUserId;
+
+            var (isSuccess, errorMessage) = _todoService.UpdateTodo(updatedItem, OtherCategory, userId);
+
+            if(!isSuccess)
             {
-                if (string.IsNullOrWhiteSpace(OtherCategory))
-                {
-                    ModelState.AddModelError("OtherCategory", "Lütfen diğer kategoriyi giriniz.");
-                }
-                else if (OtherCategory.Length > 20)
-                {
-                    ModelState.AddModelError("OtherCategory", "Diğer kategori en fazla 20 karakter olabilir.");
-                }
-                else
-                {
-                    updatedItem.Category = OtherCategory;
-                }
+                // Hatalıysa ilgili hata mesajını döndür
+                ModelState.AddModelError("OtherCategory", errorMessage ?? "Bir hata oluştu.");
+                ViewData["OtherCategory"] = OtherCategory;
+                return View(updatedItem);
             }
-
-            if (ModelState.IsValid)
-
-
-            {
-                Guid userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                _todoService.UpdateTodo(updatedItem, userId);
-                TempData["InfoMessage"] = "Görev güncellendi";
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["OtherCategory"] = OtherCategory;
-            return View(updatedItem);
+            TempData["InfoMessage"] = "Görev güncellendi";
+            return RedirectToAction(nameof(Index));
         }
 
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            Guid userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            Guid userId = CurrentUserId;
             _todoService.DeleteTodo(id, userId);
             TempData["WarningMessage"] = "Görev silindi";
             return RedirectToAction(nameof(Index));
@@ -123,7 +102,7 @@ namespace TodoProject.Controllers
 
         public IActionResult ChangeStatus(int id, string newStatus)
         {
-            Guid userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            Guid userId = CurrentUserId;
             bool result = _todoService.ChangeStatus(id, userId, newStatus);
 
             if (result)

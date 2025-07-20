@@ -1,8 +1,8 @@
-﻿using TodoProject.Entities;
-using TodoProject.Models;
+﻿using Microsoft.EntityFrameworkCore;
 using TodoProject.Business.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using TodoProject.Data.Interfaces;  
+using TodoProject.Entities;
+using TodoProject.Models;
 
 namespace TodoProject.Business.Services
 {
@@ -16,11 +16,6 @@ namespace TodoProject.Business.Services
 
         }
 
-        public void AddTodo(TodoItem item)
-        {
-            item.Status = "I";
-            _repository.Add(item);
-        }
 
         public void DeleteTodo(int id, Guid userId)
         {
@@ -37,10 +32,6 @@ namespace TodoProject.Business.Services
             return _repository.GetById(id, userId);
         }
 
-        public void UpdateTodo(TodoItem updatedItem, Guid userId)
-        {
-            _repository.Update(updatedItem, userId);
-        }
 
         public bool ChangeStatus(int id, Guid userId, string newStatus)
         {
@@ -52,6 +43,48 @@ namespace TodoProject.Business.Services
                 return true;
             }
             return false;
+        }
+
+        public (bool isSuccess, string? errorMessage) AddTodo(TodoItem item, string? otherCategory, Guid userId)
+        {
+
+
+            if (item.Category == "Other")
+            {
+                if (string.IsNullOrWhiteSpace(otherCategory))
+                {
+                    return (false, "Lütfen diğer kategoriyi giriniz.");
+                }
+                else if (otherCategory.Length > 20)
+                {
+                    return (false, "Diğer kategori en fazla 20 karakter olabilir.");
+                }
+                item.Category = otherCategory;
+            }
+            item.UserId = userId;
+            item.Status = "I";
+            _repository.Add(item);
+            return (true, null);
+        }
+
+        public (bool isSuccess, string? errorMessage) UpdateTodo(TodoItem updatedItem, string? otherCategory, Guid userId)
+        {
+            if (updatedItem.Category == "Other")
+            {
+                if (string.IsNullOrWhiteSpace(otherCategory))
+                {
+                    return (false, "Lütfen diğer kategoriyi giriniz.");
+                }
+                else if (otherCategory.Length > 20)
+                {
+                    return (false, "Diğer kategori en fazla 20 karakter olabilir.");
+                }
+
+                updatedItem.Category = otherCategory;
+            }
+
+            _repository.Update(updatedItem, userId);
+            return (true, null);
         }
 
     }
