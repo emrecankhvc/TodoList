@@ -162,4 +162,10 @@
   <data name="Priority_High" xml:space="preserve">
     <value>High</value>
   </data>
+  <data name="Category_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="EnterCustomCategory" xml:space="preserve">
+    <value>Enter your own category</value>
+  </data>
 </root>

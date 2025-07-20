@@ -33,13 +33,19 @@
 
         <div class="mb-3">
             <label asp-for="Category" class="form-label">@Localizer["Category"]*</label>
-            <select asp-for="Category" class="form-select" >
+            <select asp-for="Category" class="form-select">
                 <option value="">@Localizer["SelectPlaceHolder"]</option>
                 <option value="School">@Localizer["Category_School"]</option>
                 <option value="Work">@Localizer["Category_Work"]</option>
                 <option value="Sport">@Localizer["Category_Sport"]</option>
-             </select>
+                <option value="Other">@Localizer["Category_Other"]</option>
+            </select>
             <span asp-validation-for="Category" class="text-danger"></span>
+        </div>
+        <div class="mb-3" id="otherCategoryDiv" style="display: none;">
+            <label class="form-label">@Localizer["EnterCustomCategory"]*</label>
+            <input type="text" name="OtherCategory" id="OtherCategory" class="form-control" />
+            <span class="text-danger">@ViewData.ModelState["OtherCategory"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
         </div>
 
         <div class="mb-3">
@@ -67,8 +73,27 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    @await Html.PartialAsync("_ValidationScriptsPartial");
 
-    }
+    <script>
+        function checkOtherCategory() {
+            const selectedValue = document.getElementById("Category").value;
+            const otherDiv = document.getElementById("otherCategoryDiv");
+            const otherInput = document.getElementById("OtherCategory");
+
+            if (selectedValue === "Other") {
+                otherDiv.style.display = "block";
+            } else {
+                otherDiv.style.display = "none";
+                otherInput.value = "";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const categorySelect = document.getElementById("Category");
+            categorySelect.addEventListener("change", checkOtherCategory);
+            checkOtherCategory(); // Sayfa yüklendiğinde kontrol
+        });
+    </script>
+    
 }

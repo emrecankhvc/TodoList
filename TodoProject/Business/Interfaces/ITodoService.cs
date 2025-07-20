@@ -11,6 +11,7 @@ namespace TodoProject.Business.Interfaces
         void UpdateTodo(TodoItem item,Guid userId);
         void DeleteTodo(int id,Guid userId);
         TodoItem? GetTodoById(int id,Guid userId);
+        bool ChangeStatus(int id, Guid userId, string newStatus);
 
     }
 }

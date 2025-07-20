@@ -174,4 +174,10 @@
   <data name="SaveChanges" xml:space="preserve">
     <value>Değişiklikleri Kaydet</value>
   </data>
+  <data name="Category_Other" xml:space="preserve">
+    <value>Diğer</value>
+  </data>
+  <data name="EnterCustomCategory" xml:space="preserve">
+    <value>Kendi kategorinizi giriniz</value>
+  </data>
 </root>

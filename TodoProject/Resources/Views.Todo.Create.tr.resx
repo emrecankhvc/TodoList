@@ -162,4 +162,10 @@
   <data name="Priority_High" xml:space="preserve">
     <value>Yüksek</value>
   </data>
+  <data name="Category_Other" xml:space="preserve">
+    <value>Diğer</value>
+  </data>
+  <data name="EnterCustomCategory" xml:space="preserve">
+    <value>Kendi Kategorinizi girin</value>
+  </data>
 </root>

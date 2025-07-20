@@ -4,24 +4,25 @@ using TodoProject.Models;
 using Microsoft.Extensions.Configuration;
 using NETCore.Encrypt.Extensions;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using TodoProject.Data.Interfaces;
 
 namespace TodoProject.Business.Services
 {
 
     public class UserService : IUserService
     {
-        private readonly DatabaseContext _context;
+        private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
 
-        public UserService(DatabaseContext context, IConfiguration configuration)
+        public UserService(IUserRepository userRepository, IConfiguration configuration)
         {
-            _context = context;
+            _userRepository = userRepository;
             _configuration = configuration;
         }
 
         public bool RegisterUser(RegisterViewModel model)
         {
-            if (_context.Users.Any(x => x.Username == model.Username))
+            if (_userRepository.GetByUsername(model.Username) != null)
             {
                 return false; // Kullanıcı adı zaten var
             }
@@ -33,10 +34,11 @@ namespace TodoProject.Business.Services
                 Username = model.Username,
                 Password = hashedPassword,
             };
-            _context.Users.Add(user);
-            int affected = _context.SaveChanges();
 
-            return affected > 0; // kayıt başarılıysa true
+            _userRepository.Add(user);
+           _userRepository.Save();
+
+            return true; // kayıt başarılıysa true
         }
         private string DoMD5HashedString(string s)
         {
@@ -51,10 +53,9 @@ namespace TodoProject.Business.Services
         {
             string hashedPassword = DoMD5HashedString(model.Password);
 
-            User? user = _context.Users
-                .SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower() && x.Password == hashedPassword);
+            var user = _userRepository.GetByUsername(model.Username);
 
-            if (user == null || user.Locked)
+            if (user == null || user.Password != hashedPassword || user.Locked)
             {
                 return null;
             }
@@ -62,37 +63,37 @@ namespace TodoProject.Business.Services
         }
         public User? GetById(Guid id)
         {
-            return _context.Users.FirstOrDefault(x => x.Id == id);
-
-
-
-
+            return _userRepository.GetById(id);
 
         }
 
         public bool UpdateUser(Guid userId, string fullName)
         {
-            User? user = _context.Users.FirstOrDefault(x => x.Id == userId);
+            var user = _userRepository.GetById(userId);
             if (user == null)
                 return false;
+
+
             user.FullName = fullName;
-            _context.SaveChanges();
+            _userRepository.Update(user);
+            _userRepository.Save();
             return true;
         }
         public bool UpdatePassword(Guid userId, string newPassword)
         {
-            User? user = _context.Users.FirstOrDefault(x => x.Id == userId);
+            var user = _userRepository.GetById(userId);
             if (user == null)
                 return false;
             string hashedPassword = DoMD5HashedString(newPassword);
             user.Password = hashedPassword;
-            _context.SaveChanges();
+            _userRepository.Update(user);
+            _userRepository.Save();
             return true;
 
         }
         public string? GetFullName(Guid userId)
         {
-            return _context.Users.FirstOrDefault(x => x.Id == userId)?.FullName;
+            return _userRepository.GetFullName(userId);
         }
     }
 }

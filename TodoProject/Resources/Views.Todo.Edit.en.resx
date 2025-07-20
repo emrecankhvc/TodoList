@@ -166,12 +166,18 @@
     <value>Completed</value>
   </data>
   <data name="Status_UC" xml:space="preserve">
-    <value>Tamamlanmadı</value>
+    <value>Uncompleted</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="SaveChanges" xml:space="preserve">
     <value>Save Changes</value>
+  </data>
+  <data name="Category_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="EnterCustomCategory" xml:space="preserve">
+    <value>Enter your own category</value>
   </data>
 </root>

@@ -22,13 +22,25 @@
         </div>
 
         <div class="mb-3">
-            <label asp-for="Category" class="form-label">@Localizer["Category"]</label>
-            <select asp-for="Category" class="form-control" >
+            <label asp-for="Category" class="form-label">@Localizer["Category"]*</label>
+
+            <select id="categorySelect" asp-for="Category" class="form-control">
                 <option value="">@Localizer["SelectPlaceHolder"]</option>
-                <option value="School" selected="@("School" == Model.Category)">@Localizer["Category_School"]</option>
-                <option value="Work" selected="@("Work" == Model.Category)">@Localizer["Category_Work"]</option>
-                <option value="Sport" selected="@("Sport" == Model.Category)">@Localizer["Category_Sport"]</option>
-                </select>
+                <option value="School" selected="@(Model.Category == "School")">@Localizer["Category_School"]</option>
+                <option value="Work" selected="@(Model.Category == "Work")">@Localizer["Category_Work"]</option>
+                <option value="Sport" selected="@(Model.Category == "Sport")">@Localizer["Category_Sport"]</option>
+                <option value="Other" selected="@(Model.Category != "School" && Model.Category != "Work" && Model.Category != "Sport")">
+                    @Localizer["Category_Other"]
+                </option>
+            </select>
+            <input type="text"
+                   name="OtherCategory"
+                   id="customCategoryInput"
+                   class="form-control mt-2"
+                   placeholder="@Localizer["EnterCustomCategory"]"
+                   value="@(Model.Category != "School" && Model.Category != "Work" && Model.Category != "Sport" ? Model.Category : "")"
+                   style="display: @(Model.Category != "School" && Model.Category != "Work" && Model.Category != "Sport" ? "block" : "none")" />
+            <span class="text-danger">@ViewData.ModelState["OtherCategory"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
         </div>
 
         <div class="mb-3">
@@ -68,4 +80,18 @@
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        const categorySelect = document.getElementById("categorySelect");
+        const customCategoryInput = document.getElementById("customCategoryInput");
+
+        categorySelect.addEventListener("change", function () {
+            if (categorySelect.value === "Other") {
+                customCategoryInput.style.display = "block";
+            } else {
+                customCategoryInput.style.display = "none";
+                customCategoryInput.value = ""; // Temizle
+            }
+        });
+    </script>
 }

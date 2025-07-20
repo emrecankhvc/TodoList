@@ -225,4 +225,10 @@
   <data name="Sort_Status" xml:space="preserve">
     <value>Duruma Göre(A-Z)</value>
   </data>
+  <data name="MarkAsCompleted" xml:space="preserve">
+    <value>Tamamlandı</value>
+  </data>
+  <data name="MarkAsUncompleted" xml:space="preserve">
+    <value>Tamamlanmadı</value>
+  </data>
 </root>

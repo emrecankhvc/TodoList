@@ -42,5 +42,17 @@ namespace TodoProject.Business.Services
             _repository.Update(updatedItem, userId);
         }
 
+        public bool ChangeStatus(int id, Guid userId, string newStatus)
+        {
+            var todoItem = _repository.GetById(id, userId);
+            if (todoItem != null && (newStatus == "C" || newStatus == "U"))
+            {
+                todoItem.Status = newStatus;
+                _repository.Update(todoItem, userId);
+                return true;
+            }
+            return false;
+        }
+
     }
 }

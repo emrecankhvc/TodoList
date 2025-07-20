@@ -88,7 +88,7 @@
                                                 <span>@Localizer["Category_Sport"]</span>
                                                 break;
                                             default:
-                                                <span>@Localizer["Unknown"]</span>
+                                                <span>@item.Category</span> <!-- Girilen özel kategoriyi göster -->
                                                 break;
                                         
                                         }
@@ -101,7 +101,7 @@
                                         @switch (item.Priority)
                                         {
                                             case "Low":
-                                                <span class="badge bg-success">@Localizer["Priority_Low"]</span>
+                                                <span class="badge bg-secondary">@Localizer["Priority_Low"]</span>
                                                 break;
                                             case "Medium":
                                                 <span class="badge bg-warning text-dark">@Localizer["Priority_Medium"]</span>
@@ -135,13 +135,33 @@
                                 </ul>
                             </div>
 
-                            <div class="mt-auto d-flex justify-content-between">
-                                <a href="/Todo/Edit/@item.Id" class="btn btn-sm btn-primary">@Localizer["Edit"]</a>
+                            <div class="d-flex justify-content-between align-items-center mt-2 flex-wrap">
+                                   <!-- Sol: Edit & Delete -->
+                               <div class="d-flex gap-2">
+                                   <a href="/Todo/Edit/@item.Id" class="btn btn-sm btn-primary">@Localizer["Edit"]</a>
+
                                 <form asp-action="Delete" asp-controller="Todo" method="post" onsubmit="return confirm('@(Localizer["DeleteConfirmMessage"])');">
-                                    <input type="hidden" name="id" value="@item.Id" />
-                                    <button type="submit" class="btn btn-sm btn-danger">@Localizer["Delete"]</button>
-                                </form>
-                            </div>
+                                   <input type="hidden" name="id" value="@item.Id" />
+                                   <button type="submit" class="btn btn-sm btn-danger">@Localizer["Delete"]</button>
+                               </form>
+                               </div>
+
+                                   <!-- Sağ: Status Buttons -->
+                               <div class="d-flex gap-2">
+                               <form asp-action="ChangeStatus" method="post">
+                                   <input type="hidden" name="id" value="@item.Id" />
+                                   <input type="hidden" name="newStatus" value="C" />
+                                   <button type="submit" class="btn btn-sm btn-success"@(item.Status == "C" ? "disabled" : "")>@Localizer["MarkAsCompleted"]
+                                   </button>
+                               </form>
+
+                               <form asp-action="ChangeStatus" method="post">
+                                  <input type="hidden" name="id" value="@item.Id" />
+                                  <input type="hidden" name="newStatus" value="U" />
+                                  <button type="submit" class="btn btn-sm btn-warning" @(item.Status == "U" ? "disabled" : "")>@Localizer["MarkAsUncompleted"]</button>
+                               </form>
+                               </div>
+                           </div>
                         </div>
                     </div>
                 </div>
