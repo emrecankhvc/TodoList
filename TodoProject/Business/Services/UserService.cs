@@ -1,10 +1,13 @@
-﻿using TodoProject.Business.Interfaces;
- using TodoProject.Entities;
-using TodoProject.Models;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Configuration;
 using NETCore.Encrypt.Extensions;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.Security.Claims;
+using TodoProject.Business.Interfaces;
 using TodoProject.Data.Interfaces;
+ using TodoProject.Entities;
+using TodoProject.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace TodoProject.Business.Services
 {
@@ -19,6 +22,7 @@ namespace TodoProject.Business.Services
             _userRepository = userRepository;
             _configuration = configuration;
         }
+
 
         public bool RegisterUser(RegisterViewModel model)
         {
@@ -61,6 +65,21 @@ namespace TodoProject.Business.Services
             }
             return user;
         }
+
+        public ClaimsPrincipal CreateClaimsPrincipal(User user)
+        {
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        new Claim(ClaimTypes.Name, user.FullName ?? string.Empty),
+        new Claim(ClaimTypes.Role, user.Role),
+        new Claim("Username", user.Username),
+    };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            return new ClaimsPrincipal(identity);
+        }
+
         public User? GetById(Guid id)
         {
             return _userRepository.GetById(id);

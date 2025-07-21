@@ -77,7 +77,7 @@ namespace TodoProject.Controllers
 
             var (isSuccess, errorMessage) = _todoService.UpdateTodo(updatedItem, OtherCategory, userId);
 
-            if(!isSuccess)
+            if (!isSuccess)
             {
                 // Hatalıysa ilgili hata mesajını döndür
                 ModelState.AddModelError("OtherCategory", errorMessage ?? "Bir hata oluştu.");
@@ -120,5 +120,5 @@ namespace TodoProject.Controllers
 
 
 
-    }   
+    }
 }

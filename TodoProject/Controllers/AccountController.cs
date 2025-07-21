@@ -24,34 +24,24 @@ namespace TodoProject.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-
             var user = _userService.LoginUser(model);
-
-            if (user == null) {
+            if (user == null)
+            {
                 ModelState.AddModelError("", "Kullanıcı adı veya şifre hatalı.");
                 return View(model);
             }
 
-            var claims = new List<Claim>();
+            // ClaimsPrincipal oluşturma serviste yapılacak
+            var principal = _userService.CreateClaimsPrincipal(user);
 
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-            claims.Add(new Claim(ClaimTypes.Name, user.FullName ?? String.Empty));
-            claims.Add(new Claim(ClaimTypes.Role, user.Role));
-            claims.Add(new Claim("Username", user.Username));
-
-            ClaimsIdentity Identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            ClaimsPrincipal principal = new ClaimsPrincipal(Identity);
-
-            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
             return RedirectToAction("Index", "Todo");
-
         }
         public IActionResult Logout()
         {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TodoProject.Business.Interfaces;
-using TodoProject.Data.Interfaces;  
+using TodoProject.Data.Interfaces;
 using TodoProject.Entities;
 using TodoProject.Models;
 
@@ -25,7 +25,7 @@ namespace TodoProject.Business.Services
 
         public List<TodoItem> GetFilteredTodos(Guid userId, TodoFilterViewModel filter)
         {
-            return _repository.GetFilteredTodos(userId,filter);
+            return _repository.GetFilteredTodos(userId, filter);
         }
         public TodoItem? GetTodoById(int id, Guid userId)
         {
@@ -47,8 +47,6 @@ namespace TodoProject.Business.Services
 
         public (bool isSuccess, string? errorMessage) AddTodo(TodoItem item, string? otherCategory, Guid userId)
         {
-
-
             if (item.Category == "Other")
             {
                 if (string.IsNullOrWhiteSpace(otherCategory))
@@ -61,9 +59,12 @@ namespace TodoProject.Business.Services
                 }
                 item.Category = otherCategory;
             }
+
+            item.Status = "I"; // Yeni eklenen görev "In Progress" olur
             item.UserId = userId;
-            item.Status = "I";
+
             _repository.Add(item);
+
             return (true, null);
         }
 
