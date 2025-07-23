@@ -231,4 +231,7 @@
   <data name="MarkAsUncompleted" xml:space="preserve">
     <value>Uncompleted</value>
   </data>
+  <data name="CategoryPlaceholder" xml:space="preserve">
+    <value>Enter a category</value>
+  </data>
 </root>

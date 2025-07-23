@@ -23,4 +23,34 @@
     <Folder Include="Attributes\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resources\Models\TodoItem.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TodoItem.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\TodoProject.Business.Services.TodoService.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TodoProject.Business.Services.TodoService.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Models\TodoItem.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\TodoItem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TodoItem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\TodoProject.Business.Services.TodoService.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\TodoProject.Business.Services.TodoService.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TodoProject.Business.Services.TodoService.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

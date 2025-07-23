@@ -117,121 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddTaskButton" xml:space="preserve">
-    <value>Yeni Görev Ekle</value>
+  <data name="DescriptionTooLong" xml:space="preserve">
+    <value>Açıklama en fazla 500 karakter olabilir.</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Görevlerim</value>
+  <data name="DueDateRequired" xml:space="preserve">
+    <value>Bitiş tarihi zorunludur.</value>
   </data>
-  <data name="Status" xml:space="preserve">
-    <value>Durum</value>
+  <data name="OtherCategoryRequired" xml:space="preserve">
+    <value>lazımmm</value>
   </data>
-  <data name="Status_IP" xml:space="preserve">
-    <value>Devam Ediyor</value>
+  <data name="OtherCategoryTooLong" xml:space="preserve">
+    <value>Diğer kategori en fazla 20 karakter olabilir.</value>
   </data>
-  <data name="Status_C" xml:space="preserve">
-    <value>Tamamlandı</value>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>Başlık zorunludur.</value>
   </data>
-  <data name="Status_UC" xml:space="preserve">
-    <value>Tamamlanmadı</value>
-  </data>
-  <data name="Priority" xml:space="preserve">
-    <value>Öncelik</value>
-  </data>
-  <data name="Priority_Low" xml:space="preserve">
-    <value>Düşük</value>
-  </data>
-  <data name="Priority_Medium" xml:space="preserve">
-    <value>Orta</value>
-  </data>
-  <data name="Priority_High" xml:space="preserve">
-    <value>Yüksek</value>
-  </data>
-  <data name="Category" xml:space="preserve">
-    <value>Kategori</value>
-  </data>
-  <data name="Category_Work" xml:space="preserve">
-    <value>İş</value>
-  </data>
-  <data name="Category_School" xml:space="preserve">
-    <value>Okul</value>
-  </data>
-  <data name="Category_Sport" xml:space="preserve">
-    <value>Spor</value>
-  </data>
-  <data name="SortLabel" xml:space="preserve">
-    <value>Sırala</value>
-  </data>
-  <data name="Sort_Due_Asc" xml:space="preserve">
-    <value>Son Tarihe Göre(azalan)</value>
-  </data>
-  <data name="Sort_Priority" xml:space="preserve">
-    <value>Önceliğe Göre</value>
-  </data>
-  <data name="Sort_Title" xml:space="preserve">
-    <value>Başlığa Göre(A-Z)</value>
-  </data>
-  <data name="Sort_Category" xml:space="preserve">
-    <value>Kategoriye Göre</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Düzenle</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Kaydet</value>
-  </data>
-  <data name="Sort_Due_Desc" xml:space="preserve">
-    <value>Son Tarihe Göre(artan)</value>
-  </data>
-  <data name="ALL" xml:space="preserve">
-    <value>Hepsi</value>
-  </data>
-  <data name="FilterButton" xml:space="preserve">
-    <value>Filtrele</value>
-  </data>
-  <data name="NoTaskMessage" xml:space="preserve">
-    <value>Henüz hiç göreviniz yok</value>
-  </data>
-  <data name="DeleteConfirmMessage" xml:space="preserve">
-    <value>Görevi silmek istediğinize emin misiniz</value>
-  </data>
-  <data name="Toast_Success_Title" xml:space="preserve">
-    <value>Görev eklendi!</value>
-  </data>
-  <data name="Toast_Info_Message" xml:space="preserve">
-    <value>Görev başarıyla güncellendi.</value>
-  </data>
-  <data name="Toast_Warning_Title" xml:space="preserve">
-    <value>Görev silindi!</value>
-  </data>
-  <data name="Toast_Warning_Message" xml:space="preserve">
-    <value>Görev başarıyla silinmiştir.</value>
-  </data>
-  <data name="Toast_Success_Message" xml:space="preserve">
-    <value>Görev başarıyla eklendi.</value>
-  </data>
-  <data name="Toast_Info_Title" xml:space="preserve">
-    <value>Görev Güncellendi!</value>
-  </data>
-  <data name="DateLabel" xml:space="preserve">
-    <value>Tarih</value>
-  </data>
-  <data name="Unknown" xml:space="preserve">
-    <value>Bilinmiyor</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="Sort_Status" xml:space="preserve">
-    <value>Duruma Göre(A-Z)</value>
-  </data>
-  <data name="MarkAsCompleted" xml:space="preserve">
-    <value>Tamamlandı</value>
-  </data>
-  <data name="MarkAsUncompleted" xml:space="preserve">
-    <value>Tamamlanmadı</value>
-  </data>
-  <data name="CategoryPlaceholder" xml:space="preserve">
-    <value>Kategori giriniz</value>
+  <data name="TitleTooLong" xml:space="preserve">
+    <value>Başlık en fazla 50 karakter olabilir.</value>
   </data>
 </root>

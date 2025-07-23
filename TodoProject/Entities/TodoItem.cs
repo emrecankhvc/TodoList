@@ -9,27 +9,43 @@ namespace TodoProject.Entities
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Başlık alanı zorunludur.")]
-        [StringLength(50,ErrorMessage = "Başlık en fazla 50 karakter olabilir.")]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources.Models.TodoItem),
+            ErrorMessageResourceName = "Title_Required")]
+        [StringLength(50,
+            ErrorMessageResourceType = typeof(Resources.Models.TodoItem),
+            ErrorMessageResourceName = "Title_Length")]
         public string Title { get; set; }
 
-        [StringLength(500)]
+        [StringLength(500,
+            ErrorMessageResourceType = typeof(Resources.Models.TodoItem),
+            ErrorMessageResourceName = "Description_Length")]
         public string? Description { get; set; }
 
-        [Required(ErrorMessage = "Kategori alanı boş bırakılamaz.")]
-        [StringLength(20,ErrorMessage = "Kategori en fazla 20 karakter olabilir.")]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources.Models.TodoItem),
+            ErrorMessageResourceName = "Category_Required")]
+        [StringLength(20,
+            ErrorMessageResourceType = typeof(Resources.Models.TodoItem),
+            ErrorMessageResourceName = "Category_Length")]
         public string Category { get; set; }
 
-        [Required(ErrorMessage = "Bitiş tarihi girilmelidir.")]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources.Models.TodoItem),
+            ErrorMessageResourceName = "DueDate_Required")]
         public DateTime DueDate { get; set; }
 
-        [Required(ErrorMessage = "Durum alanı seçilmelidir.")]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources.Models.TodoItem),
+            ErrorMessageResourceName = "Status_Required")]
         [StringLength(1)]
-        public string Status { get; set; } // "U" (Uncompleted), "I" (In Progress), "C" (Completed)
+        public string Status { get; set; }
 
-        [Required(ErrorMessage = "Öncelik alanı seçilmelidir.")]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources.Models.TodoItem),
+            ErrorMessageResourceName = "Priority_Required")]
         [StringLength(10)]
-        public string Priority { get; set; } // "Low", "Medium", "High"
+        public string Priority { get; set; }
 
         [Required]
         public Guid UserId { get; set; }
