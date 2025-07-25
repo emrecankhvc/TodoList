@@ -12,7 +12,7 @@ namespace TodoProject.Business.Services
         private readonly ITodoRepository _repository;
         private readonly IStringLocalizer<TodoService> _localizer;
 
-        public TodoService(ITodoRepository repository,IStringLocalizer<TodoService> localizer)
+        public TodoService(ITodoRepository repository, IStringLocalizer<TodoService> localizer)
         {
             _repository = repository;
             _localizer = localizer;
@@ -105,7 +105,7 @@ namespace TodoProject.Business.Services
             {
                 if (string.IsNullOrWhiteSpace(otherCategory))
                 {
-                    return (false,_localizer["OtherCategoryRequired"]);
+                    return (false, _localizer["OtherCategoryRequired"]);
                 }
                 else if (otherCategory.Length > 20)
                 {
@@ -119,7 +119,11 @@ namespace TodoProject.Business.Services
             return (true, null);
         }
 
-       
+        public async Task<List<TodoItem>> GetAllTodosAsync(Guid userId)
+        {
+            return await _repository.GetAllTodosAsync(userId);
+
+        }
 
     }
 }

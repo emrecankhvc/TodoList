@@ -78,5 +78,13 @@ namespace TodoProject.Data.Repositories
 
 
         }
+
+        public async Task<List<TodoItem>> GetAllTodosAsync(Guid userId)
+        { 
+            return await _context.TodoItems
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(t => t.DueDate)
+                .ToListAsync();
+        }
     }
 }

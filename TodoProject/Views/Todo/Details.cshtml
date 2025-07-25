@@ -1,0 +1,101 @@
+﻿@model TodoProject.Entities.TodoItem
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Görev Detayları
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <strong>Başlık:</strong>
+                        </div>
+                        <div class="col-sm-9">
+                            @Model.Title
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <strong>Açıklama:</strong>
+                        </div>
+                        <div class="col-sm-9">
+                            @(Model.Description ?? "Açıklama yok")
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <strong>Kategori:</strong>
+                        </div>
+                        <div class="col-sm-9">
+                            <span class="badge bg-secondary">@Model.Category</span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <strong>Son Tarih:</strong>
+                        </div>
+                        <div class="col-sm-9">
+                            @Model.DueDate.ToString("dd.MM.yyyy")
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <strong>Durum:</strong>
+                        </div>
+                        <div class="col-sm-9">
+                            @if (Model.Status == "C")
+                            {
+                                <span class="badge bg-success">Tamamlandı</span>
+                            }
+                            else if (Model.Status == "I")
+                            {
+                                <span class="badge bg-warning">Devam Ediyor</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Beklemede</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <strong>Öncelik:</strong>
+                        </div>
+                        <div class="col-sm-9">
+                            @if (Model.Priority == "High")
+                            {
+                                <span class="badge bg-danger">Yüksek</span>
+                            }
+                            else if (Model.Priority == "Medium")
+                            {
+                                <span class="badge bg-warning">Orta</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-info">Düşük</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary me-2">
+                        <i class="fas fa-edit me-1"></i> Düzenle
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-list me-1"></i> Listeye Dön
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

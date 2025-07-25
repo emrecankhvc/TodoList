@@ -10,5 +10,7 @@ namespace TodoProject.Data.Interfaces
         List<TodoItem> GetFilteredTodos(Guid userId, TodoFilterViewModel filter);
         TodoItem? GetById(int id, Guid userId);
         void Update(TodoItem item, Guid userId);
+
+        Task<List<TodoItem>> GetAllTodosAsync(Guid userId);
     }
 }

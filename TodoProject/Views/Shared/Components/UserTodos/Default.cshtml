@@ -1,0 +1,19 @@
+﻿@model List<TodoProject.Entities.TodoItem>
+
+@if (Model != null && Model.Any())
+{
+    <ul class="list-unstyled ps-4">
+        @foreach (var todo in Model)
+        {
+            <li class="mb-1">
+                <a asp-controller="Todo" asp-action="Details" asp-route-id="@todo.Id" class="text-decoration-none text-dark">
+                    <i class="fas fa-circle-notch fa-xs me-2 text-muted"></i> @todo.Title
+                </a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p class="text-muted ps-4">No tasks found.</p>
+}

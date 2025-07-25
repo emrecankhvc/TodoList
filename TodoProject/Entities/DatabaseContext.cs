@@ -12,6 +12,7 @@ namespace TodoProject.Entities
 
         public DbSet<TodoItem> TodoItems { get; set; }
 
+        public DbSet<UserNote> UserNotes { get; set; }
 
     }
 }

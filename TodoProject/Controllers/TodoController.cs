@@ -4,7 +4,7 @@ using System.Security.Claims;
 using TodoProject.Business.Interfaces;
 using TodoProject.Entities;
 using TodoProject.Models;
-using TodoProject.Business.Interfaces;
+
 
 namespace TodoProject.Controllers
 {
@@ -12,17 +12,21 @@ namespace TodoProject.Controllers
     public class TodoController : Controller
     {
         private readonly ITodoService _todoService;
+        private readonly IUserNoteService _noteService;
         private Guid CurrentUserId => new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-        public TodoController(ITodoService todoService)
+        public TodoController(ITodoService todoService, IUserNoteService noteService)
         {
             _todoService = todoService;
+            _noteService = noteService;
         }
 
         public IActionResult Index(TodoFilterViewModel filter)
         {
             Guid userId = CurrentUserId;
             filter.Items = _todoService.GetFilteredTodos(userId, filter);
+            var existingNote = _noteService.GetById(userId);
+            ViewData["UserNote"] = existingNote?.Note ?? "";
             return View(filter);
         }
 
@@ -116,8 +120,31 @@ namespace TodoProject.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult SaveNote(string noteText)
+        {
+            
+            var userId = CurrentUserId;
+            var note = new UserNote
+            {
+                UserId = userId,
+                Note = noteText
+            };
 
+            _noteService.Save(note); 
 
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            Guid userId = CurrentUserId;
+            var item = _todoService.GetTodoById(id, userId);
+
+            if (item == null)
+                return NotFound();
+
+            return View(item);
+        }
 
 
     }

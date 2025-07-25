@@ -14,5 +14,6 @@ namespace TodoProject.Business.Interfaces
         (bool isSuccess, string? errorMessage) AddTodo(TodoItem item, string? otherCategory, Guid userId);
         (bool isSuccess, string? errorMessage) UpdateTodo(TodoItem updatedItem, string? otherCategory, Guid userId);
 
+        Task<List<TodoItem>> GetAllTodosAsync(Guid userId);
     }
 }

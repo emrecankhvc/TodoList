@@ -1,70 +1,106 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@inject ITodoService _todoService
+@using TodoProject.Business.Interfaces
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TodoProject</title>
+    <title>@ViewData["Title"] - MyTodo</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TodoProject.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+    
+   
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Todo" asp-action="Index">TodoProject</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                   <ul class="navbar-nav">
-                      @if (User.Identity.IsAuthenticated)
-                      {
-                        <li class="nav-item d-flex align-items-center">
-                                <a class="nav-link px-1" href="/set-language?culture=tr&returnUrl=@Context.Request.Path">🇹🇷</a>
-                               <span>|</span>
-                                <a class="nav-link px-1" href="/set-language?culture=en&returnUrl=@Context.Request.Path">🇬🇧</a>
-                          </li>
-                      }
-                            </ul>
-                    <ul class="navbar-nav ms-auto">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">
-                                    <i class="fa-solid fa-user me-1"></i>@User.FindFirst("Username").Value
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">
-                                    <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">
-                                    <i class="fa-solid fa-arrow-right-to-bracket me-1"></i>Login
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">
-                                    <i class="fa-solid fa-user-plus me-1"></i>Register
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
+<body>
+    <div class="sidebar">
+        @{
+            var userName = User.Claims.FirstOrDefault(c => c.Type == "Username")?.Value ?? "";
+            var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+            var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+        }
+
+        <nav class="sidebar-fixed d-flex flex-column flex-shrink-0 p-4 bg-white border-end shadow-sm">
+            <a asp-area="" asp-controller="Todo" asp-action="Index" class="d-flex align-items-center mb-4 text-decoration-none">
+                <span class="fs-2 fw-bold gradient-text">MyTodo</span>
+            </a>
+
+          
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                
+                <ul class="nav nav-pills flex-column mb-auto gap-3 fs-5">
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Todo" asp-action="Index" class="nav-link @(currentController == "Todo" && currentAction == "Index" ? "active" : "link-dark") py-3 px-3" ">
+                            <i class="fas fa-list me-2"></i> All Tasks
+                        </a>
+                    </li>
+                    @await Component.InvokeAsync("UserTodos")
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Todo" asp-action="Create" class="nav-link @(currentController == "Todo" && currentAction == "Create" ? "active" : "link-dark") py-3 px-3">
+                            <i class="fas fa-plus-circle me-2"></i> Add New Task
+                        </a>
+                    </li>
+                </ul>
+
+
+                <ul class="nav flex-column mt-4">
+                    <li class="nav-item lang-switcher d-flex align-items-center justify-content-between mb-3">
+                        <a asp-controller="Language" asp-action="SetLanguage" asp-route-culture="tr" asp-route-returnUrl="@Context.Request.Path" class="d-flex align-items-center text-decoration-none me-2">
+                            <img src="~/images/tr.png" alt="TR" class="me-1" width="20" height="14" />
+                            <span>TR</span>
+                        </a>
+                        <a asp-controller="Language" asp-action="SetLanguage" asp-route-culture="en" asp-route-returnUrl="@Context.Request.Path" class="d-flex align-items-center text-decoration-none">
+                            <img src="~/images/gb.png" alt="EN" class="me-1" width="20" height="14" />
+                            <span>EN</span>
+                        </a>
+                    </li>
+
+                    <div class="nav-item">
+                        <a asp-area="" asp-controller="Account" asp-action="Profile" class="d-flex align-items-center nav-link py-2 px-3">
+                            <i class="fa-solid fa-user-circle fa-2x text-secondary me-2"></i>
+                            <span class="fw-semibold fs-5">@userName</span>
+                        </a>
+                    </div>
+                   
+                    <li class="nav-item">
+                        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-outline-danger w-100 fs-5 py-2">
+                                <i class="fas fa-sign-out-alt me-1"></i> Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            }
+            else
+            {
+                <ul class="nav flex-column mt-4">
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Account" asp-action="Login" class="nav-link py-2 px-3">
+                            <i class="fa-solid fa-arrow-right-to-bracket me-1"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Account" asp-action="Register" class="nav-link py-2 px-3">
+                            <i class="fa-solid fa-user-plus me-1"></i> Register
+                        </a>
+                    </li>
+                </ul>
+            }
+
+            
         </nav>
-    </header>
-    <div class="container">
+
+
+    <div class="content">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -76,6 +112,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/toastr.js/toastr.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        
+
+        @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
