@@ -46,7 +46,6 @@ namespace TodoProject.Business.Services
                     HasTodos = dayTodos.Any(),
                     TodoCount = dayTodos.Count,
                     PriorityColor = GetDayPriorityColor(dayTodos),
-                    StatusColor = GetDayStatusColor(dayTodos),
                     Todos = dayTodos
                 };
 
@@ -68,18 +67,7 @@ namespace TodoProject.Business.Services
             return "#6c757d"; // Gri
         }
 
-        private string GetDayStatusColor(List<TodoItem> dayTodos)
-        {
-            if (!dayTodos.Any()) return "transparent";
-
-            var completedCount = dayTodos.Count(t => t.Status == "C");
-            var totalCount = dayTodos.Count;
-
-            // Tamamlanma durumuna göre renk yoğunluğu
-            if (completedCount == totalCount) return "#28a745"; // Hepsi tamamlandı - Yeşil
-            if (completedCount > 0) return "#ffc107"; // Kısmen tamamlandı - Sarı
-            return "#dc3545"; // Hiçbiri tamamlanmadı - Kırmızı
-        }
+        
 
         public List<TodoItem> GetTodosByDate(Guid userId, DateTime date)
         {

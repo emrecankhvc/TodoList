@@ -145,6 +145,6 @@
     <value>Title can be at most 50 characters.</value>
   </data>
   <data name="Title_Required" xml:space="preserve">
-    <value>Title_Required</value>
+    <value>Title is required.</value>
   </data>
 </root>

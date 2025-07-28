@@ -22,6 +22,17 @@ namespace TodoProject.Data.Repositories
         {
             return _context.Users.FirstOrDefault(x => x.Username.ToLower() == username.ToLower());
         }
+        public User? GetUserByCredentials(string username, string hashedPassword)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.Username.ToLower() == username.ToLower());
+
+            if (user == null || user.Password != hashedPassword || user.Locked)
+            {
+                return null;
+            }
+
+            return user;
+        }
 
         public string? GetFullName(Guid id)
         {

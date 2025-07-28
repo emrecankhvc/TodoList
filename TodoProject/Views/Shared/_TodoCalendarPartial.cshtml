@@ -1,0 +1,49 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@using System.Globalization
+
+
+<div id="calendar-container">
+    <div class="calendar-header">
+        <h5 class="calendar-title" id="calendar-title">@DateTime.Now.ToString("MMMM yyyy")</h5>
+        <div class="calendar-nav">
+            <button type="button" id="prev-month" title=@Localizer["PreviousMonth"]>
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button type="button" id="next-month" title=@Localizer["NextMonth"]>
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="calendar-grid" id="calendar-grid">
+        <!-- Haftanın günleri -->
+        <div class="calendar-weekday">@Localizer["Monday"]</div>
+        <div class="calendar-weekday">@Localizer["Tuesday"]</div>
+        <div class="calendar-weekday">@Localizer["Wednesday"]</div>
+        <div class="calendar-weekday">@Localizer["Thursday"]</div>
+        <div class="calendar-weekday">@Localizer["Friday"]</div>
+        <div class="calendar-weekday">@Localizer["Saturday"]</div>
+        <div class="calendar-weekday">@Localizer["Sunday"]</div>
+
+        <!-- Calendar days will be dynamically generated here -->
+    </div>
+
+    <div class="calendar-footer">
+        <div class="calendar-legend">
+            <div class="legend-item">
+                <div class="legend-color legend-high"></div>
+                <span>@Localizer["Priority_High"]</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-medium"></div>
+                <span>@Localizer["Priority_Medium"]</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-low"></div>
+                <span>@Localizer["Priority_Low"]</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TodoProject.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/todo.css" />
+    <link rel="stylesheet" href="~/css/Calendar.css" />
+    <link rel="stylesheet" href="~/css/Details.css" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
     
    
@@ -40,13 +43,13 @@
                 <ul class="nav nav-pills flex-column mb-auto gap-3 fs-5">
                     <li class="nav-item">
                         <a asp-area="" asp-controller="Todo" asp-action="Index" class="nav-link @(currentController == "Todo" && currentAction == "Index" ? "active" : "link-dark") py-3 px-3" ">
-                            <i class="fas fa-list me-2"></i> All Tasks
+                            <i class="fas fa-list me-2"></i> @Localizer["AllTasks"]
                         </a>
                     </li>
                     @await Component.InvokeAsync("UserTodos")
                     <li class="nav-item">
                         <a asp-area="" asp-controller="Todo" asp-action="Create" class="nav-link @(currentController == "Todo" && currentAction == "Create" ? "active" : "link-dark") py-3 px-3">
-                            <i class="fas fa-plus-circle me-2"></i> Add New Task
+                            <i class="fas fa-plus-circle me-2"></i> @Localizer["AddTaskButton"]
                         </a>
                     </li>
                 </ul>
@@ -74,7 +77,7 @@
                     <li class="nav-item">
                         <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
                             <button type="submit" class="btn btn-outline-danger w-100 fs-5 py-2">
-                                <i class="fas fa-sign-out-alt me-1"></i> Logout
+                                <i class="fas fa-sign-out-alt me-1"></i> @Localizer["Logout"]
                             </button>
                         </form>
                     </li>

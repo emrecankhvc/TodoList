@@ -86,5 +86,25 @@ namespace TodoProject.Data.Repositories
                 .OrderByDescending(t => t.DueDate)
                 .ToListAsync();
         }
+
+
+
+        public List<TodoItem> GetTodosByDateRange(Guid userId, DateTime startDate, DateTime endDate)
+        {
+            return _context.TodoItems
+                .Where(x => x.UserId == userId &&
+                           x.DueDate.Date >= startDate.Date &&
+                           x.DueDate.Date <= endDate.Date)
+                .OrderBy(x => x.DueDate)
+                .ToList();
+        }
+
+        public List<TodoItem> GetTodosByDate(Guid userId, DateTime date)
+        {
+            return _context.TodoItems
+                .Where(x => x.UserId == userId && x.DueDate.Date == date.Date)
+                .OrderBy(x => x.DueDate)
+                .ToList();
+        }
     }
 }

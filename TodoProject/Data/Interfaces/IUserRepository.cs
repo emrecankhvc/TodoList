@@ -7,6 +7,7 @@ namespace TodoProject.Data.Interfaces
     {
         User? GetById(Guid id);
         User? GetByUsername(string username);
+        User? GetUserByCredentials(string username, string hashedPassword);
 
         void Add(User user);
         void Update(User user);

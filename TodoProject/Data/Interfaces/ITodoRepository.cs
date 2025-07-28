@@ -12,5 +12,7 @@ namespace TodoProject.Data.Interfaces
         void Update(TodoItem item, Guid userId);
 
         Task<List<TodoItem>> GetAllTodosAsync(Guid userId);
+        List<TodoItem> GetTodosByDateRange(Guid userId, DateTime startDate, DateTime endDate);
+        List<TodoItem> GetTodosByDate(Guid userId, DateTime date);
     }
 }

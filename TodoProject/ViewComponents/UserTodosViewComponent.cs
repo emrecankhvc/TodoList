@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TodoProject.Business.Interfaces;
-using System.Threading.Tasks;
+
 
 namespace TodoProject.ViewComponents
 {

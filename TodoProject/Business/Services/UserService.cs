@@ -57,13 +57,7 @@ namespace TodoProject.Business.Services
         {
             string hashedPassword = DoMD5HashedString(model.Password);
 
-            var user = _userRepository.GetByUsername(model.Username);
-
-            if (user == null || user.Password != hashedPassword || user.Locked)
-            {
-                return null;
-            }
-            return user;
+            return _userRepository.GetUserByCredentials(model.Username, hashedPassword);
         }
 
         public ClaimsPrincipal CreateClaimsPrincipal(User user)

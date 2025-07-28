@@ -117,154 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddTaskButton" xml:space="preserve">
-    <value>Add New Task</value>
-  </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>My Tasks</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="Status_IP" xml:space="preserve">
-    <value>In Progress</value>
-  </data>
-  <data name="Status_C" xml:space="preserve">
-    <value>Completed</value>
-  </data>
-  <data name="Status_UC" xml:space="preserve">
-    <value>Not Completed</value>
-  </data>
-  <data name="Priority" xml:space="preserve">
-    <value>Priority</value>
-  </data>
-  <data name="Priority_Low" xml:space="preserve">
-    <value>Low</value>
-  </data>
-  <data name="Priority_Medium" xml:space="preserve">
-    <value>Medium</value>
-  </data>
-  <data name="Priority_High" xml:space="preserve">
-    <value>High</value>
-  </data>
-  <data name="Category" xml:space="preserve">
-    <value>Category</value>
-  </data>
-  <data name="Category_Work" xml:space="preserve">
-    <value>Work</value>
-  </data>
   <data name="Category_School" xml:space="preserve">
-    <value>School</value>
+    <value>Okul</value>
   </data>
   <data name="Category_Sport" xml:space="preserve">
-    <value>Sport</value>
+    <value>Spor</value>
   </data>
-  <data name="SortLabel" xml:space="preserve">
-    <value>Sort</value>
-  </data>
-  <data name="Sort_Due_Asc" xml:space="preserve">
-    <value>Due Date (descending)</value>
-  </data>
-  <data name="Sort_Priority" xml:space="preserve">
-    <value>By Priority</value>
-  </data>
-  <data name="Sort_Title" xml:space="preserve">
-    <value>Title(A-Z)</value>
-  </data>
-  <data name="Sort_Category" xml:space="preserve">
-    <value>By Category(A-Z)</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="Sort_Due_Desc" xml:space="preserve">
-    <value>Due Date(ascending)</value>
-  </data>
-  <data name="ALL" xml:space="preserve">
-    <value>All</value>
-  </data>
-  <data name="FilterButton" xml:space="preserve">
-    <value>Filter</value>
-  </data>
-  <data name="NoTaskMessage" xml:space="preserve">
-    <value>You don't have any tasks yet.</value>
-  </data>
-  <data name="DeleteConfirmMessage" xml:space="preserve">
-    <value>Are you sure you want to delete this task?</value>
-  </data>
-  <data name="Toast_Success_Title" xml:space="preserve">
-    <value>Task added!</value>
-  </data>
-  <data name="Toast_Info_Message" xml:space="preserve">
-    <value>Task has been updated successfully.</value>
-  </data>
-  <data name="Toast_Warning_Title" xml:space="preserve">
-    <value>Task deleted!</value>
-  </data>
-  <data name="Toast_Warning_Message" xml:space="preserve">
-    <value>Task has been deleted successfully.</value>
-  </data>
-  <data name="Toast_Success_Message" xml:space="preserve">
-    <value>Task has been added successfully.</value>
-  </data>
-  <data name="Toast_Info_Title" xml:space="preserve">
-    <value>Task updated!</value>
-  </data>
-  <data name="DateLabel" xml:space="preserve">
-    <value>Date</value>
-  </data>
-  <data name="Unknown" xml:space="preserve">
-    <value>Unknown</value>
+  <data name="Category_Work" xml:space="preserve">
+    <value>İş</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Sil</value>
   </data>
-  <data name="Sort_Status" xml:space="preserve">
-    <value>Status(A-Z)</value>
+  <data name="DeleteConfirmMessage" xml:space="preserve">
+    <value>Görevi silmek istediğinize emin misiniz?</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Düzenle</value>
   </data>
   <data name="MarkAsCompleted" xml:space="preserve">
-    <value>Completed</value>
+    <value>Tamamlandı</value>
   </data>
   <data name="MarkAsUncompleted" xml:space="preserve">
-    <value>Uncompleted</value>
+    <value>Tamamlanmadı</value>
   </data>
-  <data name="CategoryPlaceholder" xml:space="preserve">
-    <value>Enter a category</value>
+  <data name="Priority_High" xml:space="preserve">
+    <value>Yüksek</value>
   </data>
-  <data name="Nots" xml:space="preserve">
-    <value>Nots</value>
+  <data name="Priority_Low" xml:space="preserve">
+    <value>Düşük</value>
   </data>
-  <data name="WriteYourNote" xml:space="preserve">
-    <value>Write your note here ...</value>
+  <data name="Priority_Medium" xml:space="preserve">
+    <value>Orta</value>
   </data>
-  <data name="PreviousMonth" xml:space="preserve">
-    <value>Previous Month</value>
+  <data name="Status_C" xml:space="preserve">
+    <value>Tamamlandı</value>
   </data>
-  <data name="NextMonth" xml:space="preserve">
-    <value>Next Month</value>
+  <data name="Status_IP" xml:space="preserve">
+    <value>Devam Ediyor</value>
   </data>
-  <data name="Monday" xml:space="preserve">
-    <value>Mon</value>
+  <data name="Status_UC" xml:space="preserve">
+    <value>Tamamlanmadı</value>
   </data>
-  <data name="Tuesday" xml:space="preserve">
-    <value>Tue</value>
-  </data>
-  <data name="Wednesday" xml:space="preserve">
-    <value>Wed</value>
-  </data>
-  <data name="Thursday" xml:space="preserve">
-    <value>Thu</value>
-  </data>
-  <data name="Friday" xml:space="preserve">
-    <value>Fri</value>
-  </data>
-  <data name="Saturday" xml:space="preserve">
-    <value>Sat</value>
-  </data>
-  <data name="Sunday" xml:space="preserve">
-    <value>Sun</value>
+  <data name="Unknown" xml:space="preserve">
+    <value>Bilinmiyor</value>
   </data>
 </root>

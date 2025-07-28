@@ -234,4 +234,37 @@
   <data name="CategoryPlaceholder" xml:space="preserve">
     <value>Kategori giriniz</value>
   </data>
+  <data name="Nots" xml:space="preserve">
+    <value>Notlar</value>
+  </data>
+  <data name="WriteYourNote" xml:space="preserve">
+    <value>Buraya Notunuzu yazın ...</value>
+  </data>
+  <data name="PreviousMonth" xml:space="preserve">
+    <value>Önceki Ay</value>
+  </data>
+  <data name="NextMonth" xml:space="preserve">
+    <value>Sonraki Ay</value>
+  </data>
+  <data name="Monday" xml:space="preserve">
+    <value>Pzt</value>
+  </data>
+  <data name="Tuesday" xml:space="preserve">
+    <value>Sal</value>
+  </data>
+  <data name="Wednesday" xml:space="preserve">
+    <value>Çar</value>
+  </data>
+  <data name="Thursday" xml:space="preserve">
+    <value>Per</value>
+  </data>
+  <data name="Friday" xml:space="preserve">
+    <value>Cum</value>
+  </data>
+  <data name="Saturday" xml:space="preserve">
+    <value>Cmt</value>
+  </data>
+  <data name="Sunday" xml:space="preserve">
+    <value>Paz</value>
+  </data>
 </root>

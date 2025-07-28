@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TodoProject.Business.Interfaces;
+using TodoProject.Business.Services;
 using TodoProject.Entities;
 using TodoProject.Models;
 
@@ -11,14 +12,16 @@ namespace TodoProject.Controllers
     [Authorize]
     public class TodoController : Controller
     {
+        private readonly ICalendarService _calendarService;
         private readonly ITodoService _todoService;
         private readonly IUserNoteService _noteService;
         private Guid CurrentUserId => new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-        public TodoController(ITodoService todoService, IUserNoteService noteService)
+        public TodoController(ITodoService todoService, IUserNoteService noteService, ICalendarService calendarService)
         {
             _todoService = todoService;
             _noteService = noteService;
+            _calendarService = calendarService;
         }
 
         public IActionResult Index(TodoFilterViewModel filter)
@@ -27,7 +30,16 @@ namespace TodoProject.Controllers
             filter.Items = _todoService.GetFilteredTodos(userId, filter);
             var existingNote = _noteService.GetById(userId);
             ViewData["UserNote"] = existingNote?.Note ?? "";
+
+
+            var currentDate = DateTime.Now;
+            var calendarData = _calendarService.GetCalendarData(userId, currentDate.Year, currentDate.Month);
+            ViewData["CalendarData"] = calendarData;
+
+
             return View(filter);
+
+
         }
 
         [HttpGet]
@@ -122,7 +134,7 @@ namespace TodoProject.Controllers
         }
         public IActionResult SaveNote(string noteText)
         {
-            
+
             var userId = CurrentUserId;
             var note = new UserNote
             {
@@ -130,7 +142,7 @@ namespace TodoProject.Controllers
                 Note = noteText
             };
 
-            _noteService.Save(note); 
+            _noteService.Save(note);
 
             return RedirectToAction(nameof(Index));
         }
@@ -144,6 +156,31 @@ namespace TodoProject.Controllers
                 return NotFound();
 
             return View(item);
+        }
+
+
+
+
+        [HttpGet]
+        public IActionResult GetCalendarData(int? year, int? month)
+        {
+            var currentDate = DateTime.Now;
+            var calendarYear = year ?? currentDate.Year;
+            var calendarMonth = month ?? currentDate.Month;
+
+            var userId = CurrentUserId;
+            var calendarData = _calendarService.GetCalendarData(userId, calendarYear, calendarMonth);
+
+            return Json(calendarData);
+        }
+
+        [HttpGet]
+        public IActionResult GetTodosByDate(DateTime date)
+        {
+            var userId = CurrentUserId;
+            var todos = _calendarService.GetTodosByDate(userId, date);
+
+            return Json(todos);
         }
 
 

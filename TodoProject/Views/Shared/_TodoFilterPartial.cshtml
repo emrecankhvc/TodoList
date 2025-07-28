@@ -1,0 +1,59 @@
+﻿@model TodoProject.Models.TodoFilterViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+<!-- Filtreleme ve Sıralama Formu -->
+<div class="card shadow-sm border-0 rounded-4 mb-5 filter-card">
+    <div class="card-body">
+        <form method="get">
+            <div class="row g-4 align-items-end">
+                <div class="col-md-2">
+                    <label asp-for="Status" class="form-label text-muted fs-5">
+                        <i class="fas fa-filter me-2"></i>@Localizer["Status"]
+                    </label>
+                    <select asp-for="Status" class="form-select fs-5 py-2">
+                        <option value="">@Localizer["ALL"]</option>
+                        <option value="I" selected="@(Model.Status == "I")">@Localizer["Status_IP"]</option>
+                        <option value="C" selected="@(Model.Status == "C")">@Localizer["Status_C"]</option>
+                        <option value="U" selected="@(Model.Status == "U")">@Localizer["Status_UC"]</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="Priority" class="form-label text-muted fs-5">
+                        <i class="fas fa-bolt me-2"></i>@Localizer["Priority"]
+                    </label>
+                    <select asp-for="Priority" class="form-select fs-5 py-2">
+                        <option value="">@Localizer["ALL"]</option>
+                        <option value="Low" selected="@(Model.Priority == "Low")">@Localizer["Priority_Low"]</option>
+                        <option value="Medium" selected="@(Model.Priority == "Medium")">@Localizer["Priority_Medium"]</option>
+                        <option value="High" selected="@(Model.Priority == "High")">@Localizer["Priority_High"]</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label asp-for="Category" class="form-label text-muted fs-5">
+                        <i class="fas fa-tag me-2"></i>@Localizer["Category"]
+                    </label>
+                    <input asp-for="Category" class="form-control fs-5 py-2" placeholder="@Localizer["CategoryPlaceholder"]" />
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="SortBy" class="form-label text-muted fs-5">
+                        <i class="fas fa-sort me-2"></i>@Localizer["SortLabel"]
+                    </label>
+                    <select asp-for="SortBy" class="form-select fs-5 py-2">
+                        <option value="">@Localizer["Sort_Due_Desc"]</option>
+                        <option value="duedate_asc" selected="@(Model.SortBy == "duedate_asc")">@Localizer["Sort_Due_Asc"]</option>
+                        <option value="priority" selected="@(Model.SortBy == "priority")">@Localizer["Sort_Priority"]</option>
+                        <option value="title" selected="@(Model.SortBy == "title")">@Localizer["Sort_Title"]</option>
+                        <option value="status" selected="@(Model.SortBy == "status")">@Localizer["Sort_Status"]</option>
+                        <option value="category" selected="@(Model.SortBy == "category")">@Localizer["Sort_Category"]</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-gradient w-100 fs-5 py-2">
+                        <i class="fas fa-search me-2"></i>@Localizer["FilterButton"]
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

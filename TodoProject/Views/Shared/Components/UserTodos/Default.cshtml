@@ -1,5 +1,4 @@
 ﻿@model List<TodoProject.Entities.TodoItem>
-
 @if (Model != null && Model.Any())
 {
     <ul class="list-unstyled ps-4">
@@ -7,7 +6,12 @@
         {
             <li class="mb-1">
                 <a asp-controller="Todo" asp-action="Details" asp-route-id="@todo.Id" class="text-decoration-none text-dark">
-                    <i class="fas fa-circle-notch fa-xs me-2 text-muted"></i> @todo.Title
+                    <i class="fas fa-circle-notch fa-xs me-2 text-muted"></i>
+                    @{
+                        string title = todo.Title ?? "";
+                        string truncatedTitle = title.Length > 15 ? title.Substring(0, 15) + "..." : title;
+                    }
+                    @truncatedTitle
                 </a>
             </li>
         }
